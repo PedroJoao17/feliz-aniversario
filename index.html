@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parabéns!</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+        .hidden {
+            display: none;
+        }
+        .message {
+            font-size: 2em;
+            color: #ff5733;
+            margin-top: 20px;
+        }
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            opacity: 0.7;
+            border-radius: 50%;
+        }
+        .container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pressione o botão para celebrar!</h1>
+    <button onclick="startCelebration()">Parabéns!</button>
+    
+    <div class="container hidden" id="celebration">
+        <p class="message">Parabéns, Pedro! Você merece essa celebração!</p>
+        <img src="/emoji.jpg" alt="Celebração">
+
+        <p class="message">Abraços da equipe de TI</p>
+    </div>
+
+    <script>
+        function startCelebration() {
+            document.getElementById("celebration").classList.remove("hidden");
+            createConfetti();
+        }
+        
+        function createConfetti() {
+            for (let i = 0; i < 100; i++) {
+                let confetti = document.createElement("div");
+                confetti.classList.add("confetti");
+                document.body.appendChild(confetti);
+                
+                let size = Math.random() * 10 + 5;
+                confetti.style.width = size + "px";
+                confetti.style.height = size + "px";
+                confetti.style.backgroundColor = randomColor();
+                
+                let startX = Math.random() * window.innerWidth;
+                let startY = Math.random() * -100;
+                
+                confetti.style.left = startX + "px";
+                confetti.style.top = startY + "px";
+                
+                let animation = confetti.animate([
+                    { transform: `translateY(${window.innerHeight}px) rotate(${Math.random() * 360}deg)` },
+                ], {
+                    duration: Math.random() * 3000 + 2000,
+                    easing: "linear",
+                    iterations: 1
+                });
+                
+                animation.onfinish = () => confetti.remove();
+            }
+        }
+        
+        function randomColor() {
+            const colors = ["#ff0000", "#ff8000", "#ffff00", "#80ff00", "#00ff80", "#0080ff", "#8000ff", "#ff0080"];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+    </script>
+</body>
+</html>
